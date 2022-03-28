@@ -15,5 +15,5 @@ public class ShipModel
     public double MaxFuel { get; set; }
     public int MaxCrewNr { get; set; }
     public int MaxPassangersNr { get; set; }
-    public double MaxCargoQuantity { get; set; }
+    public double MaxCargoWeight { get; set; }
 }
