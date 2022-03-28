@@ -3,15 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExnStarships.Data.Entities;
 
-/// <summary>
-/// Instance of cargo
-/// </summary>
-public class Cargo
+public class Role
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public double Quantity { get; set; }
-    public int CargoHoldId { get; set; }
-    public int CargoModelId { get; set; }
-    public int DestinationId { get; set; } 
+    [MaxLength(50)]
+    public string Name { get; set; } = null!;
+    [MaxLength(500)]
+    public string? Description { get; set; }
 }

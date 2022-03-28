@@ -11,9 +11,9 @@ public class CargoModel
     public string Name { get; set; } = null!;
 
     [MaxLength(50)]
-    public string Serial { get; set; } = null!;
+    public string? Serial { get; set; } = null!;
     [MaxLength(500)]
     public string? Description { get; set; }
-
+    
     //public string? ImageUrl { get; set; }
 }

@@ -4,14 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ExnStarships.Data.Entities;
 
 /// <summary>
-/// Instance of cargo
+/// Acts like an "interface" for storing cargo.
+/// Ships and destinations have cargo holds.
 /// </summary>
-public class Cargo
+public class CargoHold
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public double Quantity { get; set; }
-    public int CargoHoldId { get; set; }
-    public int CargoModelId { get; set; }
-    public int DestinationId { get; set; } 
 }
