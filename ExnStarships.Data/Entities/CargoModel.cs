@@ -17,11 +17,13 @@ public class CargoModel
         Clasified
     }
     
+    // --- Info ---
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     [MaxLength(50)]
     public string Name { get; set; } = null!;
 
+    // --- Extra info ---
     [MaxLength(50)]
     public string? Serial { get; set; } = null!;
     [MaxLength(500)]
@@ -29,7 +31,8 @@ public class CargoModel
     public bool IsFragile { get; set; }
     public CargoType Type { get; set; }
 
-    public List<Cargo> Cargos { get; set; } = null!;
-
+    // lazy loaded, since won't be used much
+    public virtual ICollection<Cargo> Cargos { get; set; } = null!;
+    
     //public string? ImageUrl { get; set; }
 }

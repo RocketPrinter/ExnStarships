@@ -16,5 +16,6 @@ public class ShipModel
     public int MaxCrewNr { get; set; }
     public double MaxCargoWeight { get; set; }
 
-    public List<Ship> Ships { get; set; } = null!;
+    // lazy loaded
+    public virtual ICollection<Ship> Ships { get; set; } = null!;
 }

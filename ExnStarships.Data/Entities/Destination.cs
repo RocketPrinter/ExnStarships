@@ -12,6 +12,11 @@ public class Destination
     [MaxLength(500)]
     public string? Description { get; set; }
     public bool IsFuelDepo { get; set; }
+
+    public int CargoHoldId { get; set; }
+    // lazy loaded to prevent loading large lists
+    public virtual CargoHold CargoHold { get; set; } = null!;
+    public virtual ICollection<Connection> Connections { get; set; } = null!;
     
     //public string? ImageUrl { get; set; }
 }

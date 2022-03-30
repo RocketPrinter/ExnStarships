@@ -23,11 +23,48 @@ public class ExnStarshipContext : DbContext
         // https://www.npgsql.org/efcore/mapping/enum.html?tabs=tabid-1
         modelBuilder.HasPostgresEnum<Ship.ShipState>();
         modelBuilder.HasPostgresEnum<CargoModel.CargoType>();
+
+        // using a mix of auto include and lazy loading 
+        // this approach should be performant and doesn't require implementing repostiories for every entity
+        // I may have no idea what I'm doing.
+
+        // ships
+        var ship = modelBuilder.Entity<Ship>();
+        ship.Navigation(s => s.Crews).AutoInclude();
+        ship.Navigation(s => s.Destination).AutoInclude();
+        
+        // destination & connection
+        var con = modelBuilder.Entity<Connection>();
+        con.Navigation(c => c.FirstDestination).AutoInclude();
+        con.Navigation(c => c.SecondDestination).AutoInclude();
+        
+        // cargo
+        modelBuilder.Entity<Cargo>()
+            .Navigation(x => x.CargoHold)
+            .AutoInclude();
+        
+        modelBuilder.Entity<CargoHold>()
+            .Navigation(x => x.Cargos)
+            .AutoInclude();
+
+        // crew & roles
+        var crew = modelBuilder.Entity<Crew>();
+        crew.HasMany(c => c.Roles)
+            .WithMany(r => r.Crews)
+            .UsingEntity<CrewRole>();
+
+        crew.Navigation(c => c.Ship)
+            .AutoInclude();
     }
 
     static ExnStarshipContext()
     {
         NpgsqlConnection.GlobalTypeMapper.MapEnum<Ship.ShipState>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoModel.CargoType>();
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
     }
 }

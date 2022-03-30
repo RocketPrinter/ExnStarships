@@ -12,5 +12,6 @@ public class Role
     [MaxLength(500)]
     public string? Description { get; set; }
 
-    public IEnumerable<Crew> Crews = null!;
+    // lazy loaded
+    public virtual ICollection<Crew> Crews { get; set; } = null!;
 }
