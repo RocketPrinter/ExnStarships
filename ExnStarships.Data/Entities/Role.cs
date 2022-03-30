@@ -11,4 +11,6 @@ public class Role
     public string Name { get; set; } = null!;
     [MaxLength(500)]
     public string? Description { get; set; }
+
+    public IEnumerable<Crew> Crews = null!;
 }

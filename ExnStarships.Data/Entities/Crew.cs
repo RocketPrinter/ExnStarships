@@ -11,9 +11,14 @@ public class Crew
     public string FirstName { get; set; } = null!;
     [MaxLength(50)]
     public string LastName { get; set; } = null!;
+    public int ShipId { get; set; }
 
     public DateTime? DateOfBirth { get; set; }
     public string? Email { get; set; }
+
+    public Ship Ship { get; set; } = null!;
+
+    public IEnumerable<Role> Roles = null!;
 
     //public string? ImageUrl { get; set; }
 }

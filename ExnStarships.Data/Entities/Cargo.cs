@@ -13,5 +13,9 @@ public class Cargo
     public double Quantity { get; set; }
     public int CargoHoldId { get; set; }
     public int CargoModelId { get; set; }
-    public int DestinationId { get; set; } 
+    public int DestinationId { get; set; }
+
+    public CargoHold CargoHold { get; set; } = null!;
+    public CargoModel CargoModel { get; set; } = null!;
+    public Destination Destination { get; set; } = null!;
 }

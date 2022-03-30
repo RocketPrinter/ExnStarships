@@ -11,4 +11,6 @@ public class CargoHold
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+
+    public List<Cargo> Cargos { get; set; } = null!;
 }

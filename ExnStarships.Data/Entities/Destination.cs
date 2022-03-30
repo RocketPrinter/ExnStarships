@@ -12,6 +12,6 @@ public class Destination
     [MaxLength(500)]
     public string? Description { get; set; }
     public bool IsFuelDepo { get; set; }
-
+    
     //public string? ImageUrl { get; set; }
 }
