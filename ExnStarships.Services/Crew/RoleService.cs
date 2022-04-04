@@ -47,20 +47,14 @@ public class RoleService
                 Description = dto.Description,
             };
         }
-}
-  public void UpdateUser(UserDto userDto)
-  {
-    if (userDto == null) throw new ArgumentNullException(nameof(userDto));
-    var user = usersRepository.GetById(userDto.ID);
-    if (user == null)
+
+    public void UpdateRole(RoleDto dto)
     {
-      throw new Exception();
+        if (dto = null) throw new ArgumentException(nameof("Cannot create role using empty dto"))
+        var role = repo.GetById(dto.Id);
+        if (role == null)
+            throw new Exception("Cannot update a role which doesn't exist");
+        role.Name = dto.Name;
+        role.Description = dto.Description; 
     }
-    user.FirstName = userDto.FirstName;
-    user.LastName = userDto.LastName;
-    user.Email = userDto.Email;
-    user.Avatar = userDto.Avatar;
-    user.BirthDate = userDto.BirthDate;
-    unitOfWork.SaveChanges();
-  }
 }
