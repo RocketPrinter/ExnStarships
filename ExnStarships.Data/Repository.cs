@@ -35,4 +35,6 @@ public class Repository<T> : IRepository<T>
     {
         return dbset.ToList();
     }
+
+    public bool Exists(int id) => dbset.Find(id) != null;
 }

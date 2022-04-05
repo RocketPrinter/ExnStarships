@@ -8,6 +8,7 @@ public interface IRepository<T> where T : class
     void Delete(T entity);
     void Update(T entity);
     T? GetById(int id);
+    bool Exists(int id);
     IQueryable<T> Query(Expression<Func<T, bool>> expression);
     List<T> GetAll();
 }

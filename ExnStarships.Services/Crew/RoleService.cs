@@ -1,3 +1,4 @@
+using AutoMapper;
 using ExnStarships.Data;
 using ExnStarships.Data.Entities;
 using ExnStarships.Services.Dto;
@@ -6,13 +7,15 @@ namespace ExnStarships.Services.Crew;
 
 public class RoleService
 {
-    private readonly IRepository<Role> repo;
-    private readonly IUnitOfWork unit;
+    IRepository<Role> repo;
+    IUnitOfWork unit;
+    IMapper mapper;
 
-    public RoleService(IRepository<Role> repo, IUnitOfWork unit)
+    public RoleService(IRepository<Role> repo, IUnitOfWork unit, IMapper mapper)
     {
         this.repo = repo;
         this.unit = unit;
+        this.mapper = mapper;
     }
 
     public RoleDto? GetRole(int id)
@@ -22,26 +25,19 @@ public class RoleService
 
         var role = repo.GetById(id);
 
-        return role == null ? null :
-            new RoleDto(role.Id, role.Name, role.Description);
+        return role == null ? null : mapper.Map<Role, RoleDto>(role);
     }
 
     public List<RoleDto> GetAllUserse() => 
         repo.GetAll()
-        .Select(role => new RoleDto(role.Id, role.Name, role.Description))
+        .Select(role => mapper.Map<Role,RoleDto>(role))
         .ToList();
 
     public void CreateRole(RoleDto dto)
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
-        repo.Add(new Role()
-        {
-            Id = dto.Id,
-            Name = dto.Name,
-            Description = dto.Description
-        });
-
+        repo.Add(mapper.Map<RoleDto, Role>(dto));
         unit.SaveChanges();
     }
 
@@ -52,9 +48,7 @@ public class RoleService
         var role = repo.GetById(dto.Id);
         if (role == null)
             throw new Exception("Cannot update a role which doesn't exist");
-        role.Name = dto.Name;
-        role.Description = dto.Description;
-        repo.Update(role);
+        repo.Update(mapper.Map<RoleDto,Role>(dto));
 
         unit.SaveChanges();
     }
