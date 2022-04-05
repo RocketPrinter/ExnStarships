@@ -2,9 +2,9 @@
 
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
-    ExnStarshipContext context;
+    MainContext context;
 
-    public UnitOfWork(ExnStarshipContext context)
+    public UnitOfWork(MainContext context)
     {
         this.context = context;
     }

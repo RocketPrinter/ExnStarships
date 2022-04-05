@@ -4,7 +4,7 @@ using Npgsql;
 
 namespace ExnStarships.Data;
 
-public class ExnStarshipContext : DbContext
+public class MainContext : DbContext
 {
     public DbSet<Cargo> Cargos { get; set; } = null!;
     public DbSet<CargoHold> CargoHolds { get; set; } = null!;
@@ -32,9 +32,10 @@ public class ExnStarshipContext : DbContext
         var ship = modelBuilder.Entity<Ship>();
         ship.Navigation(s => s.Crews).AutoInclude();
         ship.Navigation(s => s.Destination).AutoInclude();
-        
+
         // destination & connection
         var con = modelBuilder.Entity<Connection>();
+        con.HasKey(c => new { c.FirstDestinationId, c.SecondDestinationId });
         con.Navigation(c => c.FirstDestination).AutoInclude();
         con.Navigation(c => c.SecondDestination).AutoInclude();
         
@@ -57,10 +58,14 @@ public class ExnStarshipContext : DbContext
             .AutoInclude();
     }
 
-    static ExnStarshipContext()
+    static MainContext()
     {
         NpgsqlConnection.GlobalTypeMapper.MapEnum<Ship.ShipState>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoModel.CargoType>();
+    }
+
+    public MainContext(DbContextOptions options) : base(options)
+    {
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

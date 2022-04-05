@@ -6,10 +6,10 @@ namespace ExnStarships.Data;
 public class Repository<T> : IRepository<T>
     where T : class
 {
-    ExnStarshipContext context;
+    MainContext context;
     DbSet<T> dbset;
 
-    public Repository(ExnStarshipContext context)
+    public Repository(MainContext context)
     {
         this.context = context;
         this.dbset = context.Set<T>();
