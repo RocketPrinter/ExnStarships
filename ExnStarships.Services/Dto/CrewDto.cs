@@ -7,7 +7,7 @@ public record CrewDto(
     string FirstName,
     string LastName,
 
-    Ship ship,
+    int shipId,
 
     DateTime? DateOfBirth,
     string? Email,
