@@ -1,9 +1,15 @@
 using ExnStarships.Data;
+using ExnStarships.Web;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<MapperProfile>();
+});
+
 builder.Services.AddDbContext<MainContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("MainContext"));
