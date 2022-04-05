@@ -1,3 +1,5 @@
+using ExnStarships.Data.Entities;
+
 namespace ExnStarships.Services.Dto;
 
 public record CrewDto(
@@ -7,7 +9,7 @@ public record CrewDto(
 
     Ship ship,
 
-    DateTime? DateOfBirth;
+    DateTime? DateOfBirth,
     string? Email,
 
     ICollection<Role> Roles
