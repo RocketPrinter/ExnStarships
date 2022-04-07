@@ -11,6 +11,7 @@ public interface IRoleService
     RoleDto? GetRole(int id);
     List<RoleDto> GetRoles();
     void UpdateRole(RoleDto dto);
+    void DeleteRole(int id);
 }
 
 public class RoleService : IRoleService
@@ -54,6 +55,19 @@ public class RoleService : IRoleService
             throw new Exception("Cannot update a role which doesn't exist");
         repo.Update(mapper.Map<RoleDto, Role>(dto));
 
+        unit.SaveChanges();
+    }
+
+    // delete role
+    public void DeleteRole(int id)
+    {
+        var role = repo.GetById(id);
+        if (role == null)
+            throw new Exception("Cannot delete a role which doesn't exist");
+        if (role.Crews?.Count > 0)
+            // todo: find a better way to communicate this
+            throw new Exception("Cannot delete role as crew is asigned to it.");
+        repo.Delete(role);
         unit.SaveChanges();
     }
 }

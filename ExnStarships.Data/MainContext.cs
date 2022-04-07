@@ -6,6 +6,8 @@ namespace ExnStarships.Data;
 
 public class MainContext : DbContext
 {
+    public static bool dbCreated = false;
+
     public DbSet<Cargo> Cargos { get; set; } = null!;
     public DbSet<CargoHold> CargoHolds { get; set; } = null!;
     public DbSet<CargoModel> CargoModels { get; set; } = null!;
@@ -36,8 +38,8 @@ public class MainContext : DbContext
         // destination & connection
         var con = modelBuilder.Entity<Connection>();
         con.HasKey(c => new { c.FirstDestinationId, c.SecondDestinationId });
-        con.Navigation(c => c.FirstDestination).AutoInclude();
-        con.Navigation(c => c.SecondDestination).AutoInclude();
+        //con.Navigation(c => c.FirstDestination).AutoInclude();
+        //con.Navigation(c => c.SecondDestination).AutoInclude();
         
         // cargo
         modelBuilder.Entity<Cargo>()
@@ -66,10 +68,14 @@ public class MainContext : DbContext
 
     public MainContext(DbContextOptions options) : base(options)
     {
+        //todo: for testing only!!!
+        if (!dbCreated)
+            Database.EnsureCreated();
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseLazyLoadingProxies();
+        //optionsBuilder.UseLazyLoadingProxies();
     }
 }

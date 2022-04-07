@@ -16,7 +16,6 @@ builder.Services.AddDbContext<MainContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("MainContext"));
 });
-builder.Services.AddScoped(typeof(DbContext), typeof(MainContext));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
@@ -44,5 +43,4 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 app.Run();

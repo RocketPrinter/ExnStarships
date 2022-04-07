@@ -1,3 +1,5 @@
+using ExnStarships.Data.Entities;
+
 namespace ExnStarships.Services.Dto;
 
 public record RoleDto(

@@ -38,7 +38,7 @@ namespace ExnStarships.Web.Controllers
         {
             if (roleVM == null)
                 return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "View model is null" });
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(roleVM);
 
             roleService.CreateRole(mapper.Map<RoleViewModel, RoleDto>(roleVM));
@@ -49,12 +49,9 @@ namespace ExnStarships.Web.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (id < 1)
-                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "id is less than 1" });
-
             var role = roleService.GetRole(id);
             if (role == null)
-                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "role is null" });
+                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Role cannot be found" });
 
             return View(mapper.Map<RoleDto,RoleViewModel>(role));
         }
@@ -68,6 +65,24 @@ namespace ExnStarships.Web.Controllers
                 return View(roleVM);
 
             roleService.UpdateRole(mapper.Map<RoleViewModel,RoleDto>(roleVM));
+
+            return RedirectToAction("Index", "Roles");
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var role = roleService.GetRole(id);
+            if (role == null)
+                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Role cannot be found" });
+            return View(mapper.Map<RoleDto, RoleViewModel>(role));
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            roleService.DeleteRole(id);
+            // todo: put something in the viewbag or something to indicate that the role has been deleted
 
             return RedirectToAction("Index", "Roles");
         }
