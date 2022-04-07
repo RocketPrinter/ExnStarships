@@ -40,8 +40,8 @@ public class MapperProfile : Profile
             if (freeTypes.TryGetValue(match.Value, out var otherType))
             {
                 var mapping = CreateMap(otherType,type).ReverseMap();
+                freeTypes.Remove(match.Value);
             }
-            freeTypes.Add(match.Value, type);
         }
 
         IEnumerable<Type> GetTypesInNamespace(Type marker) =>

@@ -8,8 +8,8 @@ namespace ExnStarships.Services.Crews;
 public interface IRoleService
 {
     void CreateRole(RoleDto dto);
-    List<RoleDto> GetRoles();
     RoleDto? GetRole(int id);
+    List<RoleDto> GetRoles();
     void UpdateRole(RoleDto dto);
 }
 
