@@ -1,6 +1,4 @@
-﻿using ExnStarships.Data.Entities;
-using ExnStarships.Services.Dto;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ExnStarships.Web.Models;
 

@@ -5,7 +5,15 @@ using ExnStarships.Services.Dto;
 
 namespace ExnStarships.Services.Navigation;
 
-public class DestinationService
+public interface IDestinationService
+{
+    void CreateDestination(DestinationDto dto);
+    DestinationDto? GetDestination(int id);
+    List<DestinationDto> GetDestinations();
+    void UpdateDestination(DestinationDto dto);
+}
+
+public class DestinationService : IDestinationService
 {
     IRepository<Destination> repo;
     IUnitOfWork unit;
@@ -29,7 +37,7 @@ public class DestinationService
         .Select(destination => mapper.Map<Destination, DestinationDto>(destination))
         .ToList();
 
-    public void CreateRole(DestinationDto dto)
+    public void CreateDestination(DestinationDto dto)
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
@@ -37,15 +45,28 @@ public class DestinationService
         unit.SaveChanges();
     }
 
-    public void UpdateRole(DestinationDto dto)
+    public void UpdateDestination(DestinationDto dto)
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
         var destination = repo.GetById(dto.Id);
         if (destination == null)
-            throw new Exception("Cannot update a role which doesn't exist");
+            throw new Exception("Cannot update a destination which doesn't exist");
         repo.Update(mapper.Map<DestinationDto, Destination>(dto));
 
         unit.SaveChanges();
     }
+
+    // todo: implement
+    //public void DeleteRole(int id)
+    //{
+    //    var role = repo.GetById(id);
+    //    if (role == null)
+    //        throw new Exception("Cannot delete a role which doesn't exist");
+    //    if (role.Crews?.Count > 0)
+    //        // todo: find a better way to communicate this
+    //        throw new Exception("Cannot delete role as crew is asigned to it.");
+    //    repo.Delete(role);
+    //    unit.SaveChanges();
+    //}
 }

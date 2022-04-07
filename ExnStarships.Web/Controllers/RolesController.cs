@@ -21,10 +21,10 @@ namespace ExnStarships.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var roleViews = roleService.GetRoles()
+            var viewModels = roleService.GetRoles()
                 .Select(role => mapper.Map<RoleDto,RoleViewModel>(role));
 
-            return View(roleViews);
+            return View(viewModels);
         }
 
         [HttpGet]
@@ -34,14 +34,14 @@ namespace ExnStarships.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] RoleViewModel roleVM)
+        public IActionResult Create([FromForm] RoleViewModel viewModel)
         {
-            if (roleVM == null)
+            if (viewModel == null)
                 return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "View model is null" });
             if (!ModelState.IsValid)
-                return View(roleVM);
+                return View(viewModel);
 
-            roleService.CreateRole(mapper.Map<RoleViewModel, RoleDto>(roleVM));
+            roleService.CreateRole(mapper.Map<RoleViewModel, RoleDto>(viewModel));
 
             return RedirectToAction("Index", "Roles");
         }
@@ -57,14 +57,14 @@ namespace ExnStarships.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit([FromForm] RoleViewModel roleVM)
+        public IActionResult Edit([FromForm] RoleViewModel viewModel)
         {
-            if (roleVM == null)
+            if (viewModel == null)
                 return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "View model is null" });
             if (ModelState.IsValid)
-                return View(roleVM);
+                return View(viewModel);
 
-            roleService.UpdateRole(mapper.Map<RoleViewModel,RoleDto>(roleVM));
+            roleService.UpdateRole(mapper.Map<RoleViewModel,RoleDto>(viewModel));
 
             return RedirectToAction("Index", "Roles");
         }

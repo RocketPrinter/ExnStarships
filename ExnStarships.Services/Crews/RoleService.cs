@@ -58,7 +58,6 @@ public class RoleService : IRoleService
         unit.SaveChanges();
     }
 
-    // delete role
     public void DeleteRole(int id)
     {
         var role = repo.GetById(id);
