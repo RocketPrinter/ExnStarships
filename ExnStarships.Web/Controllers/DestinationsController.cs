@@ -48,11 +48,11 @@ namespace ExnStarships.Web.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var destination = destinationService.GetDestination(id);
-            if (destination == null)
-                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Role cannot be found" });
+            var dto = destinationService.GetDestination(id);
+            if (dto == null)
+                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Destination cannot be found" });
 
-            return View(mapper.Map<DestinationDto, DestinationViewModel>(destination));
+            return View(mapper.Map<DestinationDto, DestinationViewModel>(dto));
         }
 
         [HttpPost]
@@ -60,7 +60,7 @@ namespace ExnStarships.Web.Controllers
         {
             if (viewModel == null)
                 return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "View model is null" });
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(viewModel);
 
             destinationService.UpdateDestination(mapper.Map<DestinationViewModel, DestinationDto>(viewModel));
@@ -73,8 +73,8 @@ namespace ExnStarships.Web.Controllers
         {
             var destination = destinationService.GetDestination(id);
             if (destination == null)
-                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Role cannot be found" });
-            return View(mapper.Map<DestinationDto, RoleViewModel>(destination));
+                return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Destination cannot be found" });
+            return View(mapper.Map<DestinationDto, DestinationViewModel>(destination));
         }
 
         // not implemented yet

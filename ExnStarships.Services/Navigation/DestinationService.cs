@@ -16,12 +16,14 @@ public interface IDestinationService
 public class DestinationService : IDestinationService
 {
     IRepository<Destination> repo;
+    IRepository<CargoHold> cargoHoldRepo;
     IUnitOfWork unit;
     IMapper mapper;
 
-    public DestinationService(IRepository<Destination> repo, IUnitOfWork unit, IMapper mapper)
+    public DestinationService(IRepository<Destination> repo, IRepository<CargoHold> cargoHoldRepo, IUnitOfWork unit, IMapper mapper)
     {
         this.repo = repo;
+        this.cargoHoldRepo = cargoHoldRepo;
         this.unit = unit;
         this.mapper = mapper;
     }
@@ -41,7 +43,13 @@ public class DestinationService : IDestinationService
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
-        repo.Add(mapper.Map<DestinationDto, Destination>(dto));
+        var dest = mapper.Map<DestinationDto, Destination>(dto);
+        
+        var cargoHold = new CargoHold();
+        cargoHoldRepo.Add(cargoHold);
+        dest.CargoHold = cargoHold;
+
+        repo.Add(dest);
         unit.SaveChanges();
     }
 
@@ -49,15 +57,18 @@ public class DestinationService : IDestinationService
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
+
         var destination = repo.GetById(dto.Id);
         if (destination == null)
             throw new Exception("Cannot update a destination which doesn't exist");
-        repo.Update(mapper.Map<DestinationDto, Destination>(dto));
 
+        // values found in the entity but not in the dto should not be changed by the mapping
+        repo.Update(mapper.Map(dto,destination));
         unit.SaveChanges();
     }
 
     // todo: implement
+    // warning! Make sure to delete CargoHold too and don't allow deletion if ship is at destination
     //public void DeleteRole(int id)
     //{
     //    var role = repo.GetById(id);

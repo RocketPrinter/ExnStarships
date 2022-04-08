@@ -21,7 +21,6 @@ builder.Services.AddDbContext<MainContext>(options =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
-builder.Services.AddScoped<ICargoHold, CargoHold>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 

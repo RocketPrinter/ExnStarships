@@ -2,7 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Welcome!</h1>
+Through this handy website you can manage Expert Network's interplanatary fleet of starships!
+
+<h2>Endpoint list</h2>
+(Grouped by function)
+
+<h3>Ship</h3>
+@Html.RouteLink("Ship endpoint","Ships")
+
+<h3>Crew</h3>
+@Html.RouteLink("Crew endpoint","Crews") | 
+@Html.RouteLink("Roles endpoint","Roles")
+
+<h3>Navigation</h3>
+@Html.RouteLink("Destinations endpoint","Destinatons")
+
+<h3>Storage</h3>

@@ -42,6 +42,7 @@ public class RoleService : IRoleService
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
+
         repo.Add(mapper.Map<RoleDto, Role>(dto));
         unit.SaveChanges();
     }
@@ -53,19 +54,21 @@ public class RoleService : IRoleService
         var role = repo.GetById(dto.Id);
         if (role == null)
             throw new Exception("Cannot update a role which doesn't exist");
-        repo.Update(mapper.Map<RoleDto, Role>(dto));
 
+        repo.Update(mapper.Map(dto,role));
         unit.SaveChanges();
     }
 
     public void DeleteRole(int id)
     {
         var role = repo.GetById(id);
+
         if (role == null)
             throw new Exception("Cannot delete a role which doesn't exist");
         if (role.Crews?.Count > 0)
             // todo: find a better way to communicate this
             throw new Exception("Cannot delete role as crew is asigned to it.");
+
         repo.Delete(role);
         unit.SaveChanges();
     }

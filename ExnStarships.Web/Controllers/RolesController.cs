@@ -61,7 +61,7 @@ namespace ExnStarships.Web.Controllers
         {
             if (viewModel == null)
                 return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "View model is null" });
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(viewModel);
 
             roleService.UpdateRole(mapper.Map<RoleViewModel,RoleDto>(viewModel));
