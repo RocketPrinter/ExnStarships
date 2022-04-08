@@ -2,6 +2,7 @@ using AutoMapper;
 using ExnStarships.Data;
 using ExnStarships.Data.Entities;
 using ExnStarships.Services.Dto;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExnStarships.Services.Navigation;
 
@@ -11,6 +12,8 @@ public interface IDestinationService
     DestinationDto? GetDestination(int id);
     List<DestinationDto> GetDestinations();
     void UpdateDestination(DestinationDto dto);
+
+    IEnumerable<SelectListItem> GetDestinationsAsSelectList();
 }
 
 public class DestinationService : IDestinationService
@@ -81,4 +84,16 @@ public class DestinationService : IDestinationService
     //    repo.Delete(role);
     //    unit.SaveChanges();
     //}
+
+    public IEnumerable<SelectListItem> GetDestinationsAsSelectList()
+    {
+        var shipModels = repo.GetAll();
+        if (shipModels.Count == 0)
+            return Enumerable.Repeat(new SelectListItem() { Value = null, Text = "No destinations found!" }, 1);
+        return shipModels.Select(sm => new SelectListItem
+        {
+            Value = sm.Id.ToString(),
+            Text = sm.Name
+        });
+    }
 }

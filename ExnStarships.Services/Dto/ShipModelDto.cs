@@ -1,11 +1,12 @@
 ﻿namespace ExnStarships.Services.Dto;
 
-public record ShipModelDto(
-    int Id,
-    string Name,
-    string? Manufacturer,
+public class ShipModelDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string? Manufacturer { get; set; }
 
-    double MaxFuel,
-    int MaxCrewNr,
-    double MaxCargoWeight
-    );
+    public double MaxFuel { get; set; }
+    public int MaxCrewNr { get; set; }
+    public double MaxCargoWeight { get; set; }
+}

@@ -18,6 +18,7 @@ public class Ship
     [MaxLength(50)]
     public string Name { get; set; } = null!;
     public int ModelId { get; set; }
+    public ShipModel Model { get; set; } = null!;
 
     // --- Navigation ---
     public double Fuel { get; set; }
@@ -27,7 +28,6 @@ public class Ship
     public Destination? Destination { get; set; }
 
     // --- Crew ---
-    public int CrewNr { get; set; }
     public List<Crew> Crews { get; set; } = null!;
 
     // --- Cargo ---

@@ -5,17 +5,27 @@ using ExnStarships.Services.Dto;
 
 namespace ExnStarships.Services.Ships;
 
-public class ShipService
+public interface IShipService
+{
+    void CreateShip(ShipDto dto);
+    ShipDto? GetShip(int id);
+    List<ShipDto> GetShips();
+    void UpdateShip(ShipDto dto);
+}
+
+public class ShipService : IShipService
 {
     IRepository<Ship> repo;
     IRepository<CargoHold> cargoHoldRepo;
+    IRepository<Destination> destinationRepo;
     IUnitOfWork unit;
     IMapper mapper;
 
-    public ShipService(IRepository<Ship> repo, IRepository<CargoHold> cargoHoldRepo, IUnitOfWork unit, IMapper mapper)
+    public ShipService(IRepository<Ship> repo, IRepository<CargoHold> cargoHoldRepo, IRepository<Destination> destinationRepo, IUnitOfWork unit, IMapper mapper)
     {
         this.repo = repo;
         this.cargoHoldRepo = cargoHoldRepo;
+        this.destinationRepo = destinationRepo;
         this.unit = unit;
         this.mapper = mapper;
     }
@@ -35,13 +45,21 @@ public class ShipService
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
-        var dest = mapper.Map<ShipDto, Ship>(dto);
+        var ship = mapper.Map<ShipDto, Ship>(dto);
+        // todo: same AutoMapper issue as in controller
+        ship.DestionationId = ship.Destination?.Id;
+        ship.Destination = null;
+        ship.ModelId = ship.Model.Id;
+        ship.Model = null!;
+
+        if (ship.DestionationId == null || !destinationRepo.Exists(ship.DestionationId.Value))
+            throw new Exception("Ship must havea valid destination!");
 
         var cargoHold = new CargoHold();
         cargoHoldRepo.Add(cargoHold);
-        dest.CargoHold = cargoHold;
+        ship.CargoHold = cargoHold;
 
-        repo.Add(dest);
+        repo.Add(ship);
         unit.SaveChanges();
     }
 
@@ -54,7 +72,10 @@ public class ShipService
         if (ship == null)
             throw new Exception("Cannot update a ship which doesn't exist");
 
-        // values found in the entity but not in the dto should not be changed by the mapping
+        // todo: will be replaced with the navigation system. You won't be able to just edit the destination
+        if (ship.DestionationId == null || !destinationRepo.Exists(ship.DestionationId.Value))
+            throw new Exception("Ship must havea valid destination!");
+
         repo.Update(mapper.Map(dto, ship));
         unit.SaveChanges();
     }

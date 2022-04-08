@@ -1,3 +1,4 @@
+using AutoMapper;
 using ExnStarships.Data;
 using ExnStarships.Data.Entities;
 using ExnStarships.Services.Crews;
@@ -25,6 +26,7 @@ builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IShipModelService, ShipModelService>();
+builder.Services.AddScoped<IShipService, ShipService>();
 
 builder.Services.AddControllersWithViews();
 

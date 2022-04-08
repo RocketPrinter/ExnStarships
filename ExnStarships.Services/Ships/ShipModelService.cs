@@ -2,6 +2,7 @@
 using ExnStarships.Data;
 using ExnStarships.Data.Entities;
 using ExnStarships.Services.Dto;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExnStarships.Services.Ships;
 
@@ -12,6 +13,8 @@ public interface IShipModelService
     ShipModelDto? GetShipModel(int id);
     List<ShipModelDto> GetShipModels();
     void UpdateShipModel(ShipModelDto dto);
+
+    IEnumerable<SelectListItem> GetShipModelsAsSelectList();
 }
 
 public class ShipModelService : IShipModelService
@@ -71,5 +74,17 @@ public class ShipModelService : IShipModelService
 
         repo.Delete(shipModel);
         unit.SaveChanges();
+    }
+
+    public IEnumerable<SelectListItem> GetShipModelsAsSelectList()
+    {
+        var shipModels = repo.GetAll();
+        if (shipModels.Count==0)
+            return Enumerable.Repeat(new SelectListItem() { Value = null, Text = "No Ship Models found!" }, 1);
+        return shipModels.Select(sm => new SelectListItem
+        {
+            Value = sm.Id.ToString(),
+            Text = sm.Name
+        });
     }
 }

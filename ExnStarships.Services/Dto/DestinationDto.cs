@@ -1,8 +1,9 @@
 namespace ExnStarships.Services.Dto;
 
-public record DestinationDto(
-    int Id,
-    string Name,
-    string? Description,
-    bool IsFuelDepo
-    );
+public class DestinationDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string? Description { get; set; }
+    public bool IsFuelDepo { get; set; }
+};
