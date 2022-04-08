@@ -68,8 +68,9 @@ public class DestinationService : IDestinationService
     }
 
     // todo: implement
-    // warning! Make sure to delete CargoHold too and don't allow deletion if ship is at destination
-    //public void DeleteRole(int id)
+    // warning! Don't delete if has cargo
+    // warning! Make sure to delete CargoHold too
+    //public void DeleteDestination(int id)
     //{
     //    var role = repo.GetById(id);
     //    if (role == null)

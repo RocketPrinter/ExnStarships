@@ -1,4 +1,4 @@
-﻿@model ExnStarships.Web.Models.DestinationViewModel
+﻿@model ExnStarships.Web.Models.ShipModelViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Destination</h4>
+    <h4>Ship Model</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,16 +23,28 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Manufacturer)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Manufacturer)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsFuelDepo)
+            @Html.DisplayNameFor(model => model.MaxFuel)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsFuelDepo)
+            @Html.DisplayFor(model => model.MaxFuel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxCrewNr)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaxCrewNr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxCargoWeight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaxCargoWeight)
         </dd>
     </dl>
 </div>

@@ -2,6 +2,7 @@ using ExnStarships.Data;
 using ExnStarships.Data.Entities;
 using ExnStarships.Services.Crews;
 using ExnStarships.Services.Navigation;
+using ExnStarships.Services.Ships;
 using ExnStarships.Web;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,7 @@ builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IShipModelService, ShipModelService>();
 
 builder.Services.AddControllersWithViews();
 

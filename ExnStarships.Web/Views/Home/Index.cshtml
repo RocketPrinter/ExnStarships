@@ -3,19 +3,20 @@
 }
 
 <h1>Welcome!</h1>
-Through this handy website you can manage Expert Network's interplanatary fleet of starships!
+Using this handy website you can manage Expert Network's interplanatary fleet of starships!
 
-<h2>Endpoint list</h2>
+<h3>Endpoint list</h3>
 (Grouped by function)
 
-<h3>Ship</h3>
-@Html.RouteLink("Ship endpoint","Ships")
+<h4>Ship</h4>
+<a asp-area="" asp-controller="Ships" asp-action="Index">Ship endpoint</a> |
+<a asp-area="" asp-controller="ShipModels" asp-action="Index">Ship Model endpoints</a>
 
-<h3>Crew</h3>
-@Html.RouteLink("Crew endpoint","Crews") | 
-@Html.RouteLink("Roles endpoint","Roles")
+<h4>Crew</h4>
+<a asp-area="" asp-controller="Crews" asp-action="Index">Crew endpoint</a> |
+<a asp-area="" asp-controller="Roles" asp-action="Index">Roles endpoint</a>
 
-<h3>Navigation</h3>
-@Html.RouteLink("Destinations endpoint","Destinatons")
+<h4>Navigation</h4>
+<a asp-area="" asp-controller="Destinations" asp-action="Index">Destinations endpoint</a>
 
-<h3>Storage</h3>
+<h4>Storage</h4>

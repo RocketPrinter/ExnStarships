@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using ExnStarships.Data;
 using ExnStarships.Data.Entities;
 using ExnStarships.Services.Dto;
@@ -54,3 +54,4 @@ public class CrewService
         unit.SaveChanges();
     }
 }
+*/
