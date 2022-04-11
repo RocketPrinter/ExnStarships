@@ -1,4 +1,4 @@
-# ExnStarshis
+# ExnStarships
 "Using this handy website you can manage Expert Network's interplanatary fleet of starships!"
 
 - In stadiul curent merg mai multe Endpoint-uri mai mult sau mai putin functionale.
