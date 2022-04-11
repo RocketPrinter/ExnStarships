@@ -47,12 +47,11 @@ public class ShipService : IShipService
             throw new ArgumentException(nameof(dto));
         var ship = mapper.Map<ShipDto, Ship>(dto);
         // todo: same AutoMapper issue as in controller
-        ship.DestionationId = ship.Destination?.Id;
+        ship.DestinationId = ship.Destination?.Id;
         ship.Destination = null;
-        ship.ModelId = ship.Model.Id;
-        ship.Model = null!;
+        ship.Model = null;
 
-        if (ship.DestionationId == null || !destinationRepo.Exists(ship.DestionationId.Value))
+        if (ship.DestinationId == null || !destinationRepo.Exists(ship.DestinationId.Value))
             throw new Exception("Ship must havea valid destination!");
 
         var cargoHold = new CargoHold();
@@ -73,7 +72,7 @@ public class ShipService : IShipService
             throw new Exception("Cannot update a ship which doesn't exist");
 
         // todo: will be replaced with the navigation system. You won't be able to just edit the destination
-        if (ship.DestionationId == null || !destinationRepo.Exists(ship.DestionationId.Value))
+        if (ship.DestinationId == null || !destinationRepo.Exists(ship.DestinationId.Value))
             throw new Exception("Ship must havea valid destination!");
 
         repo.Update(mapper.Map(dto, ship));

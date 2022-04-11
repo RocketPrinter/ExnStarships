@@ -19,7 +19,7 @@ public class ShipViewModel
 
 
     // will be null if currently not docked
-    public int? DestinationId { get; set; }
+    public int DestinationId { get; set; }
     public IEnumerable<SelectListItem>? Destinations { get; set; }
     // for displaying in Index and Details
     public string? DestinationName { get; set; }

@@ -34,6 +34,7 @@ public class MainContext : DbContext
         var ship = modelBuilder.Entity<Ship>();
         ship.Navigation(s => s.Crews).AutoInclude();
         ship.Navigation(s => s.Destination).AutoInclude();
+        ship.Navigation(s => s.Model).AutoInclude();
 
         // destination & connection
         var con = modelBuilder.Entity<Connection>();

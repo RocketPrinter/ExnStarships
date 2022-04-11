@@ -23,8 +23,9 @@ public class Ship
     // --- Navigation ---
     public double Fuel { get; set; }
     public ShipState State { get; set; } = ShipState.Docked;
+
     // will be null if currently not docked
-    public int? DestionationId { get; set; }
+    public int? DestinationId { get; set; }
     public Destination? Destination { get; set; }
 
     // --- Crew ---

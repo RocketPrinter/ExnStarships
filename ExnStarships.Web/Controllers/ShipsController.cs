@@ -60,38 +60,13 @@ public class ShipsController : Controller
             return View(viewModel);
 
         var dto = mapper.Map<ShipViewModel, ShipDto>(viewModel);
-        // todo: for some reason AutoMapper tries to map DestinationId to Destination.Id and ModelId to Model.Id, instantiating new objects and causing multiple entities with the same id to exist
-        // setting exact naming convention didn't stop it from happening, even if the docs said it would
+        // todo: for some reason AutoMapper tries to map DestinationId to Destination.Id (but not ModelId to Model.Id???)
+        // enabling exact naming convention didn't stop it from happening, even if the docs said it would
         // so we have to do this...
         dto.DestionationId = dto.Destination?.Id;
         dto.Destination = null;
-        dto.ModelId = dto.Model.Id;
-        dto.Model = null!;
 
         shipService.CreateShip(mapper.Map<ShipViewModel, ShipDto>(viewModel));
-
-        return RedirectToAction("Index", "Ships");
-    }
-
-    [HttpGet]
-    public IActionResult Edit(int id)
-    {
-        var ship = shipService.GetShip(id);
-        if (ship == null)
-            return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Ship cannot be found" });
-
-        return View(mapper.Map<ShipDto, ShipViewModel>(ship));
-    }
-
-    [HttpPost]
-    public IActionResult Edit([FromForm] ShipViewModel viewModel)
-    {
-        if (viewModel == null)
-            return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "View model is null" });
-        if (!ModelState.IsValid)
-            return View(viewModel);
-
-        shipService.UpdateShip(mapper.Map<ShipViewModel, ShipDto>(viewModel));
 
         return RedirectToAction("Index", "Ships");
     }
@@ -108,5 +83,26 @@ public class ShipsController : Controller
         viewModel.DestinationName = ship.Destination?.Name;
 
         return View(viewModel);
+    }
+
+    // INCOMPLETE CODE
+    // using a tuple as a viewModel. Probably a bad idea but I wanted to try it out
+    [HttpGet]
+    public IActionResult ChangeDestination(int id)
+    {
+        var ship = shipService.GetShip(id);
+        if (ship == null)
+            return RedirectToAction("SomethingWentWrong", "Helpers", new { message = "Ship cannot be found" });
+
+        (int Id, int? DestinationId) viewModel = (ship.Id, ship.DestionationId);
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public IActionResult ChangeDestination((int id, int DestinationId) viewModel)
+    {
+
+
+        return RedirectToAction("Index", "Ships");
     }
 }

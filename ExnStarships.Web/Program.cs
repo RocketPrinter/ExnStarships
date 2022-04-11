@@ -5,6 +5,7 @@ using ExnStarships.Services.Crews;
 using ExnStarships.Services.Navigation;
 using ExnStarships.Services.Ships;
 using ExnStarships.Web;
+using ExnStarships.Web.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +42,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMPR();
 app.UseStaticFiles();
 
 app.UseRouting();

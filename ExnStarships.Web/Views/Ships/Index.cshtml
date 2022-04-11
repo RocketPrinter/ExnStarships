@@ -57,9 +57,6 @@
                 @Html.DisplayFor(modelItem => item.CargoWeight)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CargoHoldId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.DestinationName)
             </td>
             <td>
@@ -68,7 +65,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                Delete @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
             </td>
         </tr>
 }
